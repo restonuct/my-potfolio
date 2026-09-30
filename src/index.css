@@ -16,7 +16,9 @@
 
   body {
     cursor: default;
-    overflow-x: hidden;
+    /* `clip`, not `hidden`: `hidden` turns <body> into a scroll container,
+       which silently breaks every `position: sticky` pin in the product story. */
+    overflow-x: clip;
   }
 
   button, a {
@@ -99,4 +101,37 @@
 
 .dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.35);
+}
+
+/* ------------------------------------------------------------ 3D layer ---- */
+
+/* Legacy fallback: browsers without `overflow-x: clip` lose the pinned story but
+   keep the horizontal-overflow protection. */
+@supports not (overflow-x: clip) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* While a WebGL surface is compositing underneath, trim the most expensive
+   backdrop blur on the glass surfaces. Visually near-identical, measurably
+   cheaper on mid-tier GPUs - the flag is set by SceneBackdrop. */
+html[data-webgl='on'] .apple-glass-light,
+html[data-webgl='on'] .apple-glass-dark {
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+/* The pinned beat track must not be clipped by an ancestor scroll container. */
+[data-story-beats] {
+  position: relative;
+}
+
+/* Reduced motion: never disable the 3D layer, just let the browser stop
+   smo othing scroll for the user. The scene itself reads the same preference
+   and drops its idle rotation. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

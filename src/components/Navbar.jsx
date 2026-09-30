@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useTransform } from 'framer-motion';
 import { Sun, Moon, Menu, X, ArrowUpRight, Github, Linkedin, Sparkles, Layers, Code2, User } from 'lucide-react';
+import { useScrollStage } from './ScrollController.jsx';
 
 export default function Navbar({ isDark, setIsDark }) {
   const [isStretching, setIsStretching] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { activeSection, pageProgress } = useScrollStage();
+
+  /* Real-time scroll progress: the ring reads the same motion value the 3D layer
+     uses, so the navigation can never disagree with the story. */
+  const RING_CIRCUMFERENCE = 2 * Math.PI * 9;
+  const ringOffset = useTransform(pageProgress, [0, 1], [RING_CIRCUMFERENCE, 0]);
+  const seamScale = useTransform(pageProgress, [0, 1], [0.015, 1]);
+
+  const SECTION_LABELS = {
+    hero: 'Home',
+    projects: 'Projects',
+    skills: 'Skills',
+    about: 'About',
+    contact: 'Contact',
+  };
 
   const handleThemeToggle = () => {
     setIsStretching(true);
@@ -15,10 +31,10 @@ export default function Navbar({ isDark, setIsDark }) {
   };
 
   const navLinks = [
-    { name: 'Projects', href: '#projects', icon: Layers },
-    { name: 'Skills & Tech', href: '#skills', icon: Code2 },
-    { name: 'About', href: '#about', icon: User },
-    { name: 'Contact', href: '#contact', icon: Sparkles },
+    { id: 'projects', name: 'Projects', href: '#projects', icon: Layers },
+    { id: 'skills', name: 'Skills & Tech', href: '#skills', icon: Code2 },
+    { id: 'about', name: 'About', href: '#about', icon: User },
+    { id: 'contact', name: 'Contact', href: '#contact', icon: Sparkles },
   ];
 
   return (
@@ -28,7 +44,7 @@ export default function Navbar({ isDark, setIsDark }) {
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 280, damping: 24, delay: 0.1 }}
-        className="pointer-events-auto flex items-center justify-between gap-2 sm:gap-6 px-3.5 sm:px-6 py-2 rounded-full apple-glass-light dark:apple-glass-dark specular-highlight shadow-apple-glass dark:shadow-apple-glass-dark border border-neutral-200/80 dark:border-white/10 w-full max-w-4xl"
+        className="pointer-events-auto relative flex items-center justify-between gap-2 sm:gap-6 px-3.5 sm:px-6 py-2 rounded-full apple-glass-light dark:apple-glass-dark specular-highlight shadow-apple-glass dark:shadow-apple-glass-dark border border-neutral-200/80 dark:border-white/10 w-full max-w-4xl overflow-hidden"
       >
         {/* Brand / Profile Avatar & Name */}
         <a
@@ -63,7 +79,12 @@ export default function Navbar({ isDark, setIsDark }) {
             <a
               key={link.name}
               href={link.href}
-              className="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              aria-current={activeSection === link.id ? 'true' : undefined}
+              className={`text-xs sm:text-sm font-medium px-3 py-1.5 rounded-full transition-colors ${
+                activeSection === link.id
+                  ? 'bg-black/[0.06] text-neutral-950 dark:bg-white/[0.12] dark:text-white'
+                  : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+              }`}
             >
               {link.name}
             </a>
@@ -72,6 +93,41 @@ export default function Navbar({ isDark, setIsDark }) {
 
         {/* Right Action Cluster: Dynamic Island Theme Pill + Mobile Menu Toggle */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Morphing progress island: live section readout + scrub ring */}
+          <div className="hidden items-center gap-2 rounded-full bg-black/[0.05] px-2.5 py-1 dark:bg-white/[0.08] sm:flex">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 -rotate-90" aria-hidden="true">
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                strokeWidth="2.5"
+                className="stroke-black/10 dark:stroke-white/15"
+              />
+              <motion.circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                stroke="currentColor"
+                strokeDasharray={RING_CIRCUMFERENCE}
+                style={{ strokeDashoffset: ringOffset }}
+                className="text-apple-blue"
+              />
+            </svg>
+            <motion.span
+              key={activeSection}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="min-w-[3.4rem] text-[10px] font-semibold uppercase tracking-tight text-neutral-600 dark:text-neutral-300"
+            >
+              {SECTION_LABELS[activeSection] ?? 'Home'}
+            </motion.span>
+          </div>
+
           {/* Dynamic Island Theme Toggle Switch */}
           <motion.button
             onClick={handleThemeToggle}
@@ -117,6 +173,13 @@ export default function Navbar({ isDark, setIsDark }) {
             {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
+
+        {/* Progress seam along the bottom edge of the pill */}
+        <motion.span
+          aria-hidden="true"
+          style={{ scaleX: seamScale }}
+          className="absolute inset-x-2 bottom-0 h-[2px] origin-left rounded-full bg-gradient-to-r from-apple-blue/30 via-apple-blue to-apple-blue/30"
+        />
       </motion.nav>
 
       {/* Adaptive Mobile Dropdown Drawer */}
@@ -132,17 +195,24 @@ export default function Navbar({ isDark, setIsDark }) {
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;
+                const isActive = activeSection === link.id;
                 return (
                   <a
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                    aria-current={isActive ? 'true' : undefined}
+                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'bg-black/[0.06] text-neutral-950 dark:bg-white/[0.12] dark:text-white'
+                        : 'text-neutral-700 dark:text-neutral-200 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+                    }`}
                   >
                     <div className="w-7 h-7 rounded-xl bg-apple-blue/10 text-apple-blue flex items-center justify-center">
                       <Icon className="w-3.5 h-3.5" />
                     </div>
                     <span>{link.name}</span>
+                    {isActive && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-apple-blue" />}
                   </a>
                 );
               })}

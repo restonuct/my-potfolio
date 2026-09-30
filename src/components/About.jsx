@@ -45,7 +45,11 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-20 sm:py-28 px-4 sm:px-6 max-w-5xl mx-auto">
+    <section
+      id="about"
+      data-stage-section="about"
+      className="relative py-20 sm:py-28 px-4 sm:px-6 max-w-5xl mx-auto"
+    >
       {/* Section Header */}
       <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
         <motion.div

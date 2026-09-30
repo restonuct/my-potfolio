@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
+import ArchitectureBeats from './components/ArchitectureBeats.jsx';
+import ProjectsSection from './components/ProjectsSection.jsx';
 import BentoSkills from './components/BentoSkills.jsx';
 import About from './components/About.jsx';
-import ProjectCard from './components/ProjectCard.jsx';
 import ProjectModal from './components/ProjectModal.jsx';
 import Footer from './components/Footer.jsx';
-import { PROJECTS } from './data/projects.js';
-import { Sparkles, Terminal, Layers } from 'lucide-react';
+import SceneBackdrop from './components/SceneBackdrop.jsx';
+import { ScrollControllerProvider } from './components/ScrollController.jsx';
 
 export default function App() {
   // Theme system: Default to crisp Apple Light Mode, switchable to Obsidian Dark Mode
   const [isDark, setIsDark] = useState(() => {
+    // ?theme=light|dark is a QA deep-link (documented in README) and wins over
+    // the persisted preference so both themes can be captured on demand.
+    const override = new URLSearchParams(window.location.search).get('theme');
+    if (override === 'dark') return true;
+    if (override === 'light') return false;
     const saved = localStorage.getItem('apple-portfolio-theme');
     if (saved) return saved === 'dark';
     return false; // Default Apple Light Mode
@@ -48,48 +54,30 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-apple-bg-light dark:bg-apple-bg-dark text-neutral-900 dark:text-neutral-100 transition-colors duration-500 relative selection:bg-apple-blue selection:text-white">
+    <ScrollControllerProvider>
+    <div className="relative min-h-screen bg-apple-bg-light text-neutral-900 transition-colors duration-500 selection:bg-apple-blue selection:text-white dark:bg-apple-bg-dark dark:text-neutral-100">
+      {/* Fixed, pointer-transparent WebGL layer. Everything below it scrolls
+          normally; the module behind simply follows the story. */}
+      <SceneBackdrop isDark={isDark} />
+
       {/* Floating Frosted Glass Navbar with Dynamic Island Toggle */}
       <Navbar isDark={isDark} setIsDark={setIsDark} />
 
       {/* Main Content Layout */}
-      <main>
+      <main className="relative z-10">
         {/* 1. Hero Reveal Section */}
         <Hero />
 
-        {/* 2. Featured Projects Section (Apple App Store Layout) */}
-        <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 sm:mb-12">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-apple-blue/10 dark:bg-apple-blue/20 text-apple-blue dark:text-apple-blue-dark text-xs font-semibold tracking-tight uppercase mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Featured Engineering Repositories</span>
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 dark:text-white tracking-apple-tighter">
-                Crafted Systems & Engines
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-sm">
-              Click any project card to expand into the full App Store specification modal with architecture blueprints and live code.
-            </p>
-          </div>
+        {/* 2. Pinned product-story beats: the module opens as you read these */}
+        <ArchitectureBeats />
 
-          {/* Project Bento Cards (B.A.D.I. & Ganesan Run) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {PROJECTS.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onSelect={(proj) => setSelectedProject(proj)}
-              />
-            ))}
-          </div>
-        </section>
+        {/* 3. App Store style showcase with live canvas previews per card */}
+        <ProjectsSection onSelect={(proj) => setSelectedProject(proj)} isDark={isDark} />
 
-        {/* 3. Interactive 3D Bento Skills Section */}
+        {/* 4. Interactive 3D Bento Skills Section (module shown fully open) */}
         <BentoSkills />
 
-        {/* 4. Personal Story & About Amal Section */}
+        {/* 5. Personal Story & About Amal Section */}
         <About />
       </main>
 
@@ -103,8 +91,11 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 4. Apple Minimalist Footer */}
-      <Footer />
+      {/* 6. Apple Minimalist Footer (kept above the canvas layer) */}
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </div>
+    </ScrollControllerProvider>
   );
 }

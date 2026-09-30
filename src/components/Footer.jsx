@@ -7,7 +7,11 @@ export default function Footer() {
   };
 
   return (
-    <footer id="contact" className="mt-20 sm:mt-32 border-t border-neutral-200/80 dark:border-white/10 bg-neutral-100/50 dark:bg-black/50 py-12 sm:py-16 px-4 sm:px-6">
+    <footer
+      id="contact"
+      data-stage-section="contact"
+      className="relative mt-20 sm:mt-32 border-t border-neutral-200/80 dark:border-white/10 bg-neutral-100/50 dark:bg-black/50 py-12 sm:py-16 px-4 sm:px-6"
+    >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
         {/* Left: Branding & Avatar */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
