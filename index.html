@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -11,7 +11,23 @@
   <!-- Apple Web App Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#F5F5F7" id="theme-color-meta" />
+  <meta name="theme-color" content="#000000" id="theme-color-meta" />
+  
+  <!-- Prevent FOUC: default to dark, respect light if saved -->
+  <script>
+    (function () {
+      try {
+        var override = new URLSearchParams(window.location.search).get('theme');
+        var saved = localStorage.getItem('apple-portfolio-theme');
+        if (override === 'light' || (!override && saved === 'light')) {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Inter Font fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

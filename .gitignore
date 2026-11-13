@@ -50,3 +50,8 @@ coverage/
 # Temp files
 *.tmp
 *.temp
+
+# Local agent workspace files
+.agent/
+.agents
+

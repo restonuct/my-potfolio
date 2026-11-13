@@ -34,8 +34,8 @@ const STATS = [
   },
   {
     icon: Code2,
-    label: 'Python + Web',
-    value: 'Generative AI & systems',
+    label: 'Python & Web',
+    value: 'Maths & AI workflow',
     accent: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
   },
 ];

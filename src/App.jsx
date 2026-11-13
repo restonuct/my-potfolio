@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import LoadingScreen from './components/LoadingScreen.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import ArchitectureBeats from './components/ArchitectureBeats.jsx';
@@ -12,7 +13,7 @@ import SceneBackdrop from './components/SceneBackdrop.jsx';
 import { ScrollControllerProvider } from './components/ScrollController.jsx';
 
 export default function App() {
-  // Theme system: Default to crisp Apple Light Mode, switchable to Obsidian Dark Mode
+  // Theme system: Default to Obsidian Dark Mode, switchable to Apple Light Mode
   const [isDark, setIsDark] = useState(() => {
     // ?theme=light|dark is a QA deep-link (documented in README) and wins over
     // the persisted preference so both themes can be captured on demand.
@@ -21,10 +22,11 @@ export default function App() {
     if (override === 'light') return false;
     const saved = localStorage.getItem('apple-portfolio-theme');
     if (saved) return saved === 'dark';
-    return false; // Default Apple Light Mode
+    return true; // Default Obsidian Dark Mode
   });
 
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Sync class on <html> and meta theme-color
   useEffect(() => {
@@ -56,6 +58,11 @@ export default function App() {
   return (
     <ScrollControllerProvider>
     <div className="relative min-h-screen bg-apple-bg-light text-neutral-900 transition-colors duration-500 selection:bg-apple-blue selection:text-white dark:bg-apple-bg-dark dark:text-neutral-100">
+      {/* Interactive Unique Loading Screen */}
+      {isLoading && (
+        <LoadingScreen onComplete={() => setIsLoading(false)} />
+      )}
+
       {/* Fixed, pointer-transparent WebGL layer. Everything below it scrolls
           normally; the module behind simply follows the story. */}
       <SceneBackdrop isDark={isDark} />

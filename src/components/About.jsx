@@ -19,7 +19,7 @@ export default function About() {
       color: "text-blue-500 bg-blue-500/10",
       title: "First-Year B.Tech Student",
       subtitle: "Computer Science & Engineering",
-      desc: "Currently in my foundational year of undergraduate engineering. I love understanding how computing works from first principles — from memory layouts in C to asynchronous event loops in Python and JavaScript."
+      desc: "Currently in my foundational year of undergraduate engineering. I love building practical software from first principles — focusing on Python, modern web technologies (HTML, CSS, JavaScript), mathematical problem solving, and leveraging AI to build efficiently."
     },
     {
       icon: ShieldCheck,

@@ -181,21 +181,20 @@ export default function ProjectCard({ project, onSelect, isDark, index = 0 }) {
           </div>
 
           <div className="flex items-center justify-between border-t border-neutral-200/60 pt-4 dark:border-white/5">
-            <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-500 dark:text-neutral-400">
-              {hasStars ? (
-                <>
-                  <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
-                  <span>
-                    {project.stars} Star{project.stars === 1 ? '' : 's'}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <GraduationCap className="h-3.5 w-3.5 text-apple-blue" />
-                  <span>Coursework module</span>
-                </>
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-500 dark:text-neutral-400">
+                <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                <span>
+                  {project.stars} Star{project.stars === 1 ? '' : 's'}
+                </span>
+              </span>
+              {project.liveUrl && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                  Live Interaction
+                </span>
               )}
-            </span>
+            </div>
 
             <span className="flex items-center gap-1.5 text-xs font-semibold text-apple-blue transition-transform group-hover:translate-x-1">
               <span>Inspect blueprint</span>

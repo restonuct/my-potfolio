@@ -47,25 +47,25 @@ import {
 /** DOM order matters - indices are the 3D scene's pose keys. */
 export const STORY_SECTIONS = ['hero', 'projects', 'skills', 'about', 'contact'];
 
-/** The pinned, three-beat disassembly narrative between the hero and projects. */
+/** The pinned, three-beat narrative showcasing Ganesan Run, B.A.D.I., and the developer journey. */
 export const STORY_BEATS = [
   {
-    id: 'shell',
-    label: '01 - Glass Shell',
-    title: 'Precision glass enclosure',
-    body: 'A single optically bonded shell, machined so light bends through it instead of scattering off it.',
+    id: 'ganesan',
+    label: '01 — Ganesan Run 3D',
+    title: 'High-speed browser game engine',
+    body: 'A 3D endless runner engineered with Three.js and WebGL 2.0. Featuring procedural highway chunks, dynamic camera physics, and zero-asset procedural Web Audio frequency synthesis running at 60 FPS.',
   },
   {
-    id: 'array',
-    label: '02 - Module Array',
-    title: 'Six interchangeable modules',
-    body: 'Every panel carries its own compute lane, memory lane and thermal path - serviceable without touching the spine.',
+    id: 'badi',
+    label: '02 — B.A.D.I. AI Framework',
+    title: 'Privacy-first autonomous intelligence',
+    body: 'Balanced Autonomous Digital Intelligence — built on a local-first philosophy. Runs local LLM inference via llama.cpp and ChromaDB vector retrieval, protected by a strict human consent-gating policy.',
   },
   {
-    id: 'core',
-    label: '03 - Internal Architecture',
-    title: 'The exposed core',
-    body: 'With the shell open, the neural core and thermal spine run in open air. This is where the engineering actually lives.',
+    id: 'journey',
+    label: '03 — The Builder Journey',
+    title: 'Foundations, problem solving & AI',
+    body: 'Starting from core computer science foundations — Python, modern web standards, and computational mathematics — while harnessing AI tools to build, iterate, and deliver real software with high efficiency.',
   },
 ];
 

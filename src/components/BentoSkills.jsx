@@ -1,17 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
-import { Boxes, Code2, Cpu, Layers, Sparkles, Zap } from 'lucide-react';
+import { Calculator, Code2, Globe, Layers, Sparkles, Zap } from 'lucide-react';
 import KineticHeading from './KineticHeading.jsx';
 
 // Engineering Toolkit.
-//
-// While this section holds the viewport, the 3D module beside it is fully open
-// (see SECTION_POSES in src/three/GlassArchitecture.jsx) - the internals are on
-// screen exactly while the reader is looking at the stack that builds them.
-//
-// Each card keeps the existing physics tilt, but tilt is skipped entirely for
-// reduced-motion users: the cards simply sit flat and still reveal on scroll.
-
 function TiltBentoCard({ children, className = '' }) {
   const cardRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
@@ -54,56 +46,56 @@ function TiltBentoCard({ children, className = '' }) {
 
 const SKILL_CATEGORIES = [
   {
-    title: 'Core Programming & Architecture',
+    title: 'Python Programming',
     icon: Code2,
     accent: 'text-blue-500 bg-blue-500/10',
     skills: [
-      { name: 'Python 3.10+', tag: 'Primary / Asyncio' },
-      { name: 'JavaScript (ES6+)', tag: 'Modern Web / APIs' },
-      { name: 'C Programming', tag: 'Foundations & Memory' },
-      { name: 'Modular Architecture', tag: 'Plugin Pattern' },
+      { name: 'Basic Python', tag: 'Syntax & Scripting' },
+      { name: 'Functions & Logic', tag: 'Clean & Modular' },
+      { name: 'Data Structures', tag: 'Lists, Dicts, Tuples' },
+      { name: 'Automation', tag: 'CLI & File Handling' },
     ],
     description:
-      'Writing maintainable, decoupled system code with clean interfaces and strict type-safety principles.',
+      'Foundational Python development, focusing on clear logic structures, script automation, and reliable problem solving.',
   },
   {
-    title: '3D Graphics & Game Engine',
-    icon: Boxes,
+    title: 'Web Technologies (HTML, CSS & JS)',
+    icon: Globe,
     accent: 'text-amber-500 bg-amber-500/10',
     skills: [
-      { name: 'Three.js (r128)', tag: 'WebGL Scene Graph' },
-      { name: 'WebGL 2.0', tag: '60 FPS Render Pipeline' },
-      { name: 'Procedural Generation', tag: 'Endless Geometry' },
-      { name: 'Collision Systems', tag: '3-Lane Physics' },
+      { name: 'HTML5', tag: 'Semantic Layout' },
+      { name: 'CSS3', tag: 'Responsive Design & Grid' },
+      { name: 'JavaScript (ES6+)', tag: 'DOM & Events' },
+      { name: 'Modern Web UI', tag: 'Interactive Experiences' },
     ],
     description:
-      'Building responsive 3D environments, custom camera rigs and low-poly assets optimised for instant browser load.',
+      'Crafting responsive, accessible, and structured web interfaces with clean modern CSS and dynamic JavaScript.',
   },
   {
-    title: 'AI, Local Models & Memory',
-    icon: Cpu,
-    accent: 'text-purple-500 bg-purple-500/10',
-    skills: [
-      { name: 'llama.cpp', tag: 'Local GGUF Quantization' },
-      { name: 'ChromaDB', tag: 'Vector Embeddings' },
-      { name: 'Hybrid Intelligence', tag: 'Cloud + Offline' },
-      { name: 'Controlled Autonomy', tag: 'Human Consent Verification' },
-    ],
-    description:
-      'Building private, offline-first autonomous agents that prioritise user privacy and zero data leakage.',
-  },
-  {
-    title: 'Audio Synthesis & Engineering Tools',
-    icon: Zap,
+    title: 'Problem Solving & Mathematics',
+    icon: Calculator,
     accent: 'text-emerald-500 bg-emerald-500/10',
     skills: [
-      { name: 'Web Audio API', tag: 'Real-time Synthesizer' },
-      { name: 'Git & Version Control', tag: 'GitHub Workflow' },
-      { name: 'HTML5 LocalStorage', tag: 'Persistent State' },
-      { name: 'macOS & Linux Terminal', tag: 'CLI Tooling' },
+      { name: 'Problem Solving', tag: 'Algorithmic Thinking' },
+      { name: 'Applied Mathematics', tag: 'Analytical Logic' },
+      { name: 'Logical Deduction', tag: 'Guard Clauses & Flow' },
+      { name: 'Edge Case Testing', tag: 'Robust Reasoning' },
     ],
     description:
-      'Crafting lightweight procedural audio engines and productive terminal development workflows.',
+      'Applying mathematical principles and structured analytical reasoning to break down problems into clean, solvable code.',
+  },
+  {
+    title: 'AI-Powered Workflow & Efficiency',
+    icon: Zap,
+    accent: 'text-purple-500 bg-purple-500/10',
+    skills: [
+      { name: 'AI-Assisted Dev', tag: 'Rapid Execution' },
+      { name: 'Prompt Engineering', tag: 'Structured Context' },
+      { name: 'Agentic Workflows', tag: 'Tooling & Acceleration' },
+      { name: 'Efficient Delivery', tag: 'High-Impact Shipping' },
+    ],
+    description:
+      'Leveraging state-of-the-art AI systems and agentic workflows to research, debug, and build software with maximum productivity.',
   },
 ];
 
@@ -116,15 +108,15 @@ export default function BentoSkills() {
     >
       <div className="mb-10 sm:mb-14">
         <KineticHeading
-          badge="Interactive Engineering Toolkit"
+          badge="Verified Competencies"
           badgeIcon={Sparkles}
-          title="Engineering Toolkit"
-          description="The stack behind the module on your right - it is fully opened up while you read this. Hover any card for its perspective tilt, or scroll on if you would rather not."
+          title="Skills & Foundations"
+          description="My core technical skillset: foundational programming in Python, modern web standards (HTML, CSS, JavaScript), mathematical problem solving, and AI-accelerated development."
         />
 
         <div className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-neutral-200/70 bg-white/60 px-3.5 py-2 text-[11px] font-medium text-neutral-600 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-300">
           <Layers className="h-3.5 w-3.5 text-apple-blue" />
-          <span>4 production disciplines · 16 verified skills</span>
+          <span>Core Engineering Foundations · 4 Focus Disciplines</span>
         </div>
       </div>
 
@@ -152,7 +144,7 @@ export default function BentoSkills() {
                         {category.title}
                       </h3>
                       <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                        Production ready
+                        Active skill
                       </span>
                     </div>
                   </div>

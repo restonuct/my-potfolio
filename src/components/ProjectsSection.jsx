@@ -4,17 +4,10 @@ import { PROJECTS } from '../data/projects.js';
 import ProjectCard from './ProjectCard.jsx';
 import KineticHeading from './KineticHeading.jsx';
 
-// App Store-style showcase.
-//
-// Grid logic: featured repositories render full-width with a live canvas band
-// beside the copy; the two coursework modules sit side by side underneath. Four
-// cards, three rows, no empty cells.
-
+// Showcase of flagship creations: B.A.D.I. and Ganesan Run.
 export default function ProjectsSection({ onSelect, isDark }) {
   const ordered = useMemo(() => {
-    const featured = PROJECTS.filter((project) => project.featured);
-    const rest = PROJECTS.filter((project) => !project.featured);
-    return [...featured, ...rest];
+    return PROJECTS;
   }, []);
 
   return (
@@ -28,7 +21,7 @@ export default function ProjectsSection({ onSelect, isDark }) {
           badge="Featured Engineering Repositories"
           badgeIcon={Sparkles}
           title="Crafted Systems & Engines"
-          description="Four shipped builds, from a Three.js game engine to a local-first AI framework. Hover a card to spin up its live canvas preview."
+          description="Featured flagship builds: B.A.D.I. (privacy-first autonomous AI framework) and Ganesan Run (3D WebGL endless runner). Hover any card to view its live canvas preview."
         />
 
         <div className="flex items-center gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">

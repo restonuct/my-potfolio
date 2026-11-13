@@ -142,6 +142,19 @@ export default function ProjectModal({ project, onClose }) {
 
           {/* Action Row */}
           <div className="flex flex-wrap items-center gap-3 my-6 pt-4 border-t border-neutral-200/80 dark:border-white/10">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-xs sm:text-sm hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-md"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>Play Live Game (Interaction Link)</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+              </a>
+            )}
+
             <a
               href={project.repoUrl}
               target="_blank"
@@ -266,32 +279,68 @@ export default function ProjectModal({ project, onClose }) {
           {activeTab === 'interactive' && (
             <div className="p-6 rounded-3xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200/80 dark:border-white/10">
               {project.id === 'ganesan-run-3d' ? (
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto mb-3">
-                    <Volume2 className="w-6 h-6" />
+                <div className="space-y-6">
+                  {/* Embedded Live Game Frame */}
+                  <div>
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <h4 className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white">
+                          Live Interactive Game (ganesan-run.vercel.app)
+                        </h4>
+                      </div>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+                      >
+                        <span>Open Full Screen in New Tab</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                    
+                    <div className="relative w-full h-[380px] sm:h-[420px] rounded-2xl overflow-hidden border border-neutral-300 dark:border-white/10 bg-black shadow-inner">
+                      <iframe
+                        src={project.liveUrl}
+                        title="Ganesan Run Live Interaction"
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope"
+                      />
+                    </div>
+                    <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-2 text-center">
+                      Click inside to play! Use Arrow Keys or A / D to steer, Spacebar to jump.
+                    </p>
                   </div>
-                  <h4 className="text-base font-bold text-neutral-900 dark:text-white">
-                    Zero-Asset Procedural Web Audio Synth
-                  </h4>
-                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-md mx-auto mt-1 mb-5">
-                    Click below to trigger the in-browser real-time oscillator chime matching the Modak pickup algorithm in Ganesan Run.
-                  </p>
-                  <button
-                    onClick={handlePlaySynthesizer}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95"
-                  >
-                    <Play className="w-4 h-4 fill-white" />
-                    <span>Trigger Synthesized Chime (587Hz → 880Hz)</span>
-                  </button>
-                  {audioFeedback && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-4 text-xs font-mono text-emerald-600 dark:text-emerald-400"
+
+                  {/* Procedural Audio Synthesizer */}
+                  <div className="text-center pt-5 border-t border-neutral-200/80 dark:border-white/10">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto mb-2">
+                      <Volume2 className="w-5 h-5" />
+                    </div>
+                    <h5 className="text-sm font-bold text-neutral-900 dark:text-white">
+                      Procedural Web Audio Synth Test
+                    </h5>
+                    <p className="text-xs text-neutral-600 dark:text-neutral-400 max-w-md mx-auto mt-0.5 mb-3">
+                      Test the zero-asset frequency oscillator algorithm synthesized in real-time.
+                    </p>
+                    <button
+                      onClick={handlePlaySynthesizer}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-md transition-all hover:scale-105 active:scale-95"
                     >
-                      {audioFeedback}
-                    </motion.div>
-                  )}
+                      <Play className="w-3.5 h-3.5 fill-white" />
+                      <span>Trigger Synthesized Chime (587Hz → 880Hz)</span>
+                    </button>
+                    {audioFeedback && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-3 text-xs font-mono text-emerald-600 dark:text-emerald-400"
+                      >
+                        {audioFeedback}
+                      </motion.div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div>

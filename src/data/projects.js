@@ -78,18 +78,19 @@ class AutonomousActionModule(Module):
     status: "Live Open Source",
     stars: 1,
     repoUrl: "https://github.com/restonuct/ganesan-run",
+    liveUrl: "https://ganesan-run.vercel.app",
     badge: "Three.js & WebGL 2.0",
     accentColor: "from-amber-500 to-orange-600",
     glowColor: "rgba(245, 158, 11, 0.25)",
     featured: true,
     previewKey: "runner",
     posterIcon: "gamepad",
-    interactiveDemo: "synth",
+    interactiveDemo: "runner-game",
     specs: [
       { label: "Engine", value: "Three.js r128 / WebGL 2.0" },
-      { label: "Frame budget", value: "16.6 ms - locked 60 FPS" },
+      { label: "Live Game", value: "ganesan-run.vercel.app" },
       { label: "Audio", value: "Web Audio API, fully procedural" },
-      { label: "Persistence", value: "HTML5 LocalStorage economy" }
+      { label: "Frame budget", value: "16.6 ms - locked 60 FPS" }
     ],
     summary:
       "A high-performance 3D Endless Runner built with Three.js and WebGL 2.0. Features procedural ceremonial highway generation, low-poly animated character rigs, real-time Web Audio API sound synthesis, and a persistent local economy.",
@@ -110,6 +111,7 @@ class AutonomousActionModule(Module):
     ],
     highlights: [
       "Solid 60 FPS in browser on both mobile and desktop hardware.",
+      "Live interactive deployment at ganesan-run.vercel.app.",
       "Procedural road chunk pooling for zero garbage collection frame drops.",
       "Native Web Audio API synthesizer — no heavy audio asset loading required.",
       "Eco-friendly conservation narrative chasing the urban polluter villain."
@@ -149,139 +151,6 @@ export class DivineAudioEngine {
     osc.stop(this.ctx.currentTime + 0.35);
   }
 }`
-    }
-  },
-  {
-    id: "student-grade-calculator",
-    title: "Student Grade Calculator",
-    subtitle: "Weighted Marks to Letter Grade",
-    tagline: "Foundational Python Logic & Input Validation",
-    category: "Python Fundamentals",
-    date: "2026",
-    status: "Coursework Module",
-    stars: 0,
-    featured: false,
-    previewKey: "grades",
-    posterIcon: "chart",
-    interactiveDemo: "grades",
-    repoUrl: "https://github.com/restonuct/python-practical",
-    badge: "Python 3 Console App",
-    accentColor: "from-emerald-500 to-teal-600",
-    glowColor: "rgba(16, 185, 129, 0.22)",
-    specs: [
-      { label: "Language", value: "Python 3" },
-      { label: "Interface", value: "Console prompts with validation" },
-      { label: "Method", value: "Weighted average to letter grade" },
-      { label: "Focus", value: "Guard clauses & pure functions" }
-    ],
-    summary:
-      "A weighted grading utility written while learning applied Python. It validates marks and weights, rejects impossible input instead of silently coercing it, and maps a weighted average onto a letter grade with a GPA-style remark.",
-    techStack: [
-      "Python 3",
-      "CLI I/O",
-      "Input Validation",
-      "Functions & Loops",
-      "Conditional Logic"
-    ],
-    architecture: [
-      { layer: "Input Layer", desc: "Prompts for marks and per-component weights, with type and range guards" },
-      { layer: "Validation Layer", desc: "Rejects mismatched lengths, out-of-range marks and weights that do not total 100" },
-      { layer: "Computation Layer", desc: "One pure function: weighted average, then threshold mapping" },
-      { layer: "Presentation Layer", desc: "Formatted console report of score, letter grade and remark" }
-    ],
-    highlights: [
-      "Fails loudly on bad input instead of producing a confident wrong number.",
-      "Computation lives in a single pure function, so the grading table is trivial to change.",
-      "The weighted-average maths generalises well beyond the coursework brief."
-    ],
-    codeSnippet: {
-      filename: "grade_calculator.py",
-      language: "python",
-      code: `def calculate_grade(marks, weights):
-    """Weighted average -> letter grade, with input guard clauses."""
-    if len(marks) != len(weights):
-        raise ValueError("marks and weights must be the same length")
-    if sum(weights) != 100:
-        raise ValueError("weights must total 100")
-    if any(not 0 <= mark <= 100 for mark in marks):
-        raise ValueError("each mark must be between 0 and 100")
-
-    score = sum(mark * weight for mark, weight in zip(marks, weights)) / 100
-
-    if score >= 90:
-        return "A", score
-    if score >= 80:
-        return "B", score
-    if score >= 70:
-        return "C", score
-    if score >= 60:
-        return "D", score
-    return "F", score`
-    }
-  },
-  {
-    id: "voting-eligibility-engine",
-    title: "Voting Eligibility",
-    subtitle: "Policy Verification Engine",
-    tagline: "Age & Registration Rules with Explicit Reason Codes",
-    category: "Logic & Policy Validation",
-    date: "2026",
-    status: "Coursework Module",
-    stars: 0,
-    featured: false,
-    previewKey: "vote",
-    posterIcon: "shield",
-    interactiveDemo: "vote",
-    repoUrl: "https://github.com/restonuct/python-practical",
-    badge: "Python 3 Policy Logic",
-    accentColor: "from-blue-500 to-cyan-600",
-    glowColor: "rgba(41, 151, 255, 0.22)",
-    specs: [
-      { label: "Language", value: "Python 3" },
-      { label: "Input", value: "Age + registration state" },
-      { label: "Method", value: "Ordered rules with reason codes" },
-      { label: "Focus", value: "Boolean logic & edge cases" }
-    ],
-    summary:
-      "A small eligibility checker that models a real policy surface: minimum age, registration state and malformed input. Instead of returning a bare boolean it returns a reason code - the same consent-gate pattern used later in B.A.D.I.",
-    techStack: [
-      "Python 3",
-      "Boolean Logic",
-      "Guard Clauses",
-      "Reason Codes",
-      "Edge-case Testing"
-    ],
-    architecture: [
-      { layer: "Rule Set", desc: "Minimum voting age and registration requirements held as named constants" },
-      { layer: "Validator", desc: "Rejects non-integer or negative input before any rule runs" },
-      { layer: "Evaluator", desc: "Ordered guard clauses - the first failing rule explains the outcome" },
-      { layer: "Result Contract", desc: "Returns (eligible, reason) so the caller never has to guess why" }
-    ],
-    highlights: [
-      "Returns a reason code rather than a bare boolean, which is far easier to test and to render.",
-      "Malformed input is a first-class case, not an exception path.",
-      "Same consent-gate reasoning that later shaped the B.A.D.I. policy engine."
-    ],
-    codeSnippet: {
-      filename: "voting_eligibility.py",
-      language: "python",
-      code: `MINIMUM_VOTING_AGE = 18
-
-def check_eligibility(age, is_registered):
-    """Returns (eligible, reason) - every rejection carries a reason code."""
-    if not isinstance(age, int) or age < 0:
-        return False, "invalid_age"
-    if age < MINIMUM_VOTING_AGE:
-        return False, "under_minimum_age"
-    if not is_registered:
-        return False, "not_registered"
-    return True, "eligible"
-
-
-if __name__ == "__main__":
-    for age, registered in ((17, True), (18, False), (18, True)):
-        eligible, reason = check_eligibility(age, registered)
-        print(f"age={age} registered={registered} -> {eligible} ({reason})")`
     }
   }
 ];

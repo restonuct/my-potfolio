@@ -1,19 +1,15 @@
 import React from 'react';
 import { motion, useTransform } from 'framer-motion';
-import { Aperture, Cpu, Layers, MoveDown } from 'lucide-react';
+import { Gamepad2, Cpu, Sparkles, MoveDown } from 'lucide-react';
 import { STORY_BEATS, useScrollStage } from './ScrollController.jsx';
 
 /**
  * The pinned middle act of the product story.
  *
- * The section is 2.4 viewports tall; its inner panel is `sticky top-0`, which
- * is what "pinning" actually is on the web - no scroll hijacking, no transform
- * hacks, native inertia. Three captions cross-fade strictly in sync with the
- * disassembly of the 3D module beside them, because both read the same
- * `beatsProgress` motion value measured in ScrollController.
+ * Three captions cross-fade smoothly across Ganesan Run, B.A.D.I., and Amal's builder journey.
  */
 
-const BEAT_ICONS = [Aperture, Layers, Cpu];
+const BEAT_ICONS = [Gamepad2, Cpu, Sparkles];
 
 const smoothStep = (t) => (t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t));
 
@@ -75,14 +71,14 @@ export default function ArchitectureBeats() {
           <div className="max-w-md lg:max-w-[27rem]">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-tight text-neutral-600 dark:bg-white/[0.07] dark:text-neutral-300">
               <span className="h-1.5 w-1.5 rounded-full bg-apple-blue" />
-              Product story
+              The Product Story
             </span>
 
             <h2
               id="architecture-beats-title"
               className="mt-4 text-3xl font-extrabold tracking-apple-tighter text-neutral-950 dark:text-white sm:text-5xl"
             >
-              Inside the build
+              The Creations & Journey
             </h2>
 
             {/* Caption stage - all three beats occupy the same box so they cross-fade. */}
